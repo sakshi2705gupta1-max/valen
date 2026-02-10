@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine Page</title>
+
+  <!-- 🌸 CSS START -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;   /* 👈 key fix */
+  background: linear-gradient(135deg, #ffd6e8, #ffeef6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden; /* don’t hide vertical content */
+}
+
+
+    #chocolateRain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+
+    #chocolateRain span {
+  position: absolute;
+  top: -40px;
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;   /* runs once per chocolate */
+  animation-fill-mode: forwards;  /* keeps it falling smoothly */
+  pointer-events: none;
+}
+
+
+    @keyframes fall {
+      from {
+        transform: translateY(-40px);
+      }
+      to {
+        transform: translateY(110vh);
+      }
+    }
+
+    .container {
+  position: relative;      /* 👈 REQUIRED for z-index */
+  background: #fff0f6;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+
+
+    h1 {
+      color: #d6336c;
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      color: #b5174f;
+      margin-bottom: 20px;
+    }
+
+    #question {
+      background: #ffffff;
+      padding: 10px 15px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+    }
+
+    button {
+      padding: 12px 25px;
+      margin: 10px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #yesBtn {
+      background: #ff4d6d;
+      color: white;
+    }
+
+    #yesBtn:hover {
+      background: #e0315b;
+    }
+
+    #noBtn {
+      background: #adb5bd;
+      color: white;
+    }
+
+    #noBtn:hover {
+      background: #868e96;
+    }
+
+    .quote {
+      margin-top: 25px;
+      font-style: italic;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+  </style>
+  <!-- 🌸 CSS END -->
+</head>
+
+<body>
+    <h1 style="color:red; position:fixed; top:20px; left:20px; z-index:99999;">
+  PAGE IS LOADING
+</h1>
+
+
+  <div id="chocolateRain"></div>
+
+  <div class="container">
+    <h1>❤️ Shivam ❤️</h1>
+    <h2>Will you be my non-committal Valentine? ❤️💫</h2>
+
+    <p id="question">"Wait...are you sure? 🫠😉"</p>
+
+    <button id="yesBtn">Yes!</button>
+    <button id="noBtn">No</button>
+
+    <p class="quote">"Because you complete me"</p>
+  </div>
+
+  <!-- 🎵 Music -->
+  <audio id="bgMusic"></audio>
+
+
+  <!-- 💘 JS START -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+      const yesBtn = document.getElementById("yesBtn");
+      const noBtn = document.getElementById("noBtn");
+      const question = document.getElementById("question");
+      const chocolateRain = document.getElementById("chocolateRain");
+      const music = document.getElementById("bgMusic");
+
+      let yesCount = 0;
+
+      // YES button logic
+      yesBtn.addEventListener("click", () => {
+        yesCount++;
+
+        if (yesCount === 1) {
+          question.textContent = "Really really sure? 🥹💖 Click again!";
+        }
+
+        if (yesCount === 2) {
+          question.textContent = "Hehe… I knew it 💕🎶";
+          music.volume = 0.8;
+          music.play().catch(err => console.log("Audio blocked:", err));
+        }
+      });
+
+      // NO button runs away
+      noBtn.addEventListener("mouseover", () => {
+        noBtn.style.transform = `translate(
+          ${Math.random() * 200 - 100}px,
+          ${Math.random() * 200 - 100}px
+        )`;
+      });
+
+      // 🍫 Chocolate rain
+      function createChocolate() {
+        const choco = document.createElement("span");
+        choco.textContent = "🍫";
+        choco.style.left = Math.random() * 100 + "vw";
+        choco.style.fontSize = Math.random() * 10 + 18 + "px";
+        choco.style.animationDuration = Math.random() * 4 + 6 + "s";
+
+        chocolateRain.appendChild(choco);
+
+        choco.addEventListener("animationend", () => {
+          choco.remove();
+        });
+      }
+
+      setInterval(createChocolate, 500);
+    });
+  </script>
+  <!-- 💘 JS END -->
+
+</body>
+</html>
